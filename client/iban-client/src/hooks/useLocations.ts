@@ -39,14 +39,22 @@ export function useLocalitati(raionId?: number): Localitate[] {
   return localitati
 }
 
-export function useAllLocalitati(): Localitate[] {
-    const { token } = useAuth()
-    const [all, setAll] = useState<Localitate[]>([])
-    useEffect(() => {
-      axios
-        .get<Localitate[]>(`${BASE}/localitati`, { headers: { Authorization: `Bearer ${token}` } })
-        .then(r => setAll(r.data))
-        .catch(console.error)
-    }, [token])
-    return all
-  }
+/**
+ * Returns all localitati when enabled. To lazily load localitati,
+ * pass enabled=false initially and set to true upon user interaction.
+ */
+export function useAllLocalitati(enabled: boolean = true): Localitate[] {
+  const { token } = useAuth()
+  const [all, setAll] = useState<Localitate[]>([])
+  useEffect(() => {
+    if (!enabled) {
+      setAll([])
+      return
+    }
+    axios
+      .get<Localitate[]>(`${BASE}/localitati`, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => setAll(res.data))
+      .catch(console.error)
+  }, [token, enabled])
+  return all
+}

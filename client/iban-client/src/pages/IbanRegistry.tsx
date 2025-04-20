@@ -19,6 +19,7 @@ export default function IbanRegistry() {
   const [codEco, setCodEco] = useState('')
   const [selectedRaionId, setSelectedRaionId] = useState<number>()
   const [localitate, setLocalitate] = useState('')
+  // lazy-load all localitati only when needed
   const [editTarget, setEditTarget] = useState<IbanCode | null>(null)
 
   // dropdown options
@@ -27,6 +28,7 @@ export default function IbanRegistry() {
   const raions = useRaioane()
   // cascade localitati: by raion or all
   const localitatiByRaion = useLocalitati(selectedRaionId)
+  // always load the full list of localitati (cached by the hook) and also support filtering by raion
   const allLocalitati = useAllLocalitati()
   const localitati = selectedRaionId ? localitatiByRaion : allLocalitati
 
@@ -152,6 +154,8 @@ export default function IbanRegistry() {
               setSelectedRaionId(found.raionId)
             }
           }}
+          infinite
+          pageSize={50}
         />
 
         <button onClick={fetchIbans} className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">

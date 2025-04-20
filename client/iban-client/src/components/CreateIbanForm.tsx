@@ -22,7 +22,7 @@ export default function CreateIbanForm({ onSuccess, initialData }: Props) {
   // raion/localitate cascade
   const raions = useRaioane()
   const [selectedRaionId, setSelectedRaionId] = useState<number>()
-  // fetch localitati: filter by raionId or show all if none selected
+  // load all localitati on mount, and also support filtering by raion
   const localitatiByRaion = useLocalitati(selectedRaionId)
   const allLocalitati = useAllLocalitati()
   const localitati = selectedRaionId ? localitatiByRaion : allLocalitati
@@ -139,6 +139,8 @@ export default function CreateIbanForm({ onSuccess, initialData }: Props) {
               setSelectedRaionId(found.raionId)
             }
           }}
+          infinite
+          pageSize={50}
         />
       </div>
 
