@@ -4,10 +4,10 @@
 
 namespace IbanApi.Migrations
 {
-    /// <inheritdoc />
+    
     public partial class AddRaionLocalitate : Migration
     {
-        /// <inheritdoc />
+        
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
@@ -49,7 +49,7 @@ namespace IbanApi.Migrations
                 column: "RaionId");
         }
 
-        /// <inheritdoc />
+        
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

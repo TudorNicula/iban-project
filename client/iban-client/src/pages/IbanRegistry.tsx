@@ -14,25 +14,25 @@ import 'sweetalert2/src/sweetalert2.scss'
 export default function IbanRegistry() {
   const { token, role, assignedRaion } = useAuth()
 
-  // filter state
+  
   const [year, setYear] = useState('')
   const [codEco, setCodEco] = useState('')
   const [selectedRaionId, setSelectedRaionId] = useState<number>()
   const [localitate, setLocalitate] = useState('')
-  // lazy-load all localitati only when needed
+  
   const [editTarget, setEditTarget] = useState<IbanCode | null>(null)
 
-  // dropdown options
+  
   const [years, setYears] = useState<string[]>([])
   const [codEcos, setCodEcos] = useState<string[]>([])
   const raions = useRaioane()
-  // cascade localitati: by raion or all
+  
   const localitatiByRaion = useLocalitati(selectedRaionId)
-  // always load the full list of localitati (cached by the hook) and also support filtering by raion
+  
   const allLocalitati = useAllLocalitati()
   const localitati = selectedRaionId ? localitatiByRaion : allLocalitati
 
-  // on mount load years & codEcos
+  
   useEffect(() => {
     axios
       .get<IbanCode[]>('http://localhost:5141/iban', {
@@ -46,7 +46,7 @@ export default function IbanRegistry() {
       .catch(() => toast.error('Eroare la încărcarea opțiunilor'))
   }, [token])
 
-  // fetch registry when you click “Caută”
+  
   const fetchIbans = useCallback(async () => {
     try {
       const params: any = { year, codEco, localitate }
@@ -64,7 +64,7 @@ export default function IbanRegistry() {
     }
   }, [token, year, codEco, localitate, selectedRaionId, raions])
 
-  // auto-set for OperatorRaion
+  
   useEffect(() => {
     if (role === 'OperatorRaion' && assignedRaion) {
       const r = raions.find((r) => r.name === assignedRaion)
@@ -72,7 +72,7 @@ export default function IbanRegistry() {
     }
   }, [role, assignedRaion, raions])
 
-  // delete
+  
   const handleDelete = async (id: number) => {
     const { isConfirmed } = await Swal.fire({
       title: 'Ștergere cod IBAN',
@@ -96,7 +96,7 @@ export default function IbanRegistry() {
     }
   }
 
-  // export
+  
   const handleExport = () => {
     const clean = ibans.map(({ id, iban, year, codEco, raion, localitate, createdBy }) => ({
       ID: id,
@@ -117,7 +117,6 @@ export default function IbanRegistry() {
     <div className="max-w-7xl mx-auto p-4 space-y-8">
       <ToastContainer position="top-right" />
 
-      {/* Header */}
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-semibold">Registrul IBAN</h2>
         {role !== 'OperatorRaion' && (
@@ -127,7 +126,6 @@ export default function IbanRegistry() {
         )}
       </div>
 
-      {/* Filters */}
       <div className="bg-white p-6 rounded shadow flex flex-wrap gap-4">
         <FilterCombobox label="An" options={years} value={year} onChange={setYear} />
         <FilterCombobox label="Cod Eco" options={codEcos} value={codEco} onChange={setCodEco} />
@@ -148,7 +146,7 @@ export default function IbanRegistry() {
           value={localitate}
           onChange={(name) => {
             setLocalitate(name)
-            // auto-select raion when choosing a localitate
+            
             const found = localitati.find((l) => l.name === name)
             if (found) {
               setSelectedRaionId(found.raionId)
@@ -163,7 +161,6 @@ export default function IbanRegistry() {
         </button>
       </div>
 
-      {/* Create/Edit */}
       {role !== 'OperatorRaion' && (
         <div className="bg-white p-6 rounded shadow">
           <CreateIbanForm
@@ -176,7 +173,6 @@ export default function IbanRegistry() {
         </div>
       )}
 
-      {/* Table */}
       <div className="bg-white p-6 rounded shadow overflow-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">

@@ -10,9 +10,9 @@ using IbanApi.Features.Locations.Queries;
 
 namespace IbanApi.Features.Locations.Handlers
 {
-    /// <summary>
-    /// Handler for retrieving all localitati.
-    /// </summary>
+    
+    
+    
     public class GetAllLocalitatiHandler : IRequestHandler<GetAllLocalitatiQuery, List<Localitate>>
     {
         private readonly AppDbContext _db;

@@ -17,9 +17,9 @@ public class LocationsController : ControllerBase
     public async Task<IActionResult> GetLocalitati(int raionId) =>
         Ok(await _mediator.Send(new GetLocalitatiByRaionQuery { RaionId = raionId }));
 
-    /// <summary>
-    /// Retrieves all localitati across all raioane.
-    /// </summary>
+    
+    
+    
     [HttpGet("localitati")]
     public async Task<IActionResult> GetAllLocalitati() =>
         Ok(await _mediator.Send(new GetAllLocalitatiQuery()));

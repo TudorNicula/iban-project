@@ -14,21 +14,21 @@ type Props = {
 export default function CreateIbanForm({ onSuccess, initialData }: Props) {
   const { token } = useAuth()
 
-  // base fields
+  
   const [iban, setIban] = useState('')
   const [year, setYear] = useState<number>(new Date().getFullYear())
   const [codEco, setCodEco] = useState('')
 
-  // raion/localitate cascade
+  
   const raions = useRaioane()
   const [selectedRaionId, setSelectedRaionId] = useState<number>()
-  // load all localitati on mount, and also support filtering by raion
+  
   const localitatiByRaion = useLocalitati(selectedRaionId)
   const allLocalitati = useAllLocalitati()
   const localitati = selectedRaionId ? localitatiByRaion : allLocalitati
   const [localitate, setLocalitate] = useState('')
 
-  // when editing, populate
+  
   useEffect(() => {
     if (initialData) {
       setIban(initialData.iban)
@@ -67,7 +67,7 @@ export default function CreateIbanForm({ onSuccess, initialData }: Props) {
           { headers: { Authorization: `Bearer ${token}` } }
         )
         toast.success('IBAN adăugat cu succes!')
-        // clear form
+        
         setIban('')
         setYear(new Date().getFullYear())
         setCodEco('')
@@ -110,7 +110,6 @@ export default function CreateIbanForm({ onSuccess, initialData }: Props) {
           className="w-full border rounded px-3 py-2 focus:ring-2 focus:ring-blue-400"
         />
 
-        {/* Raion dropdown */}
         <FilterCombobox
           label="Raion"
           options={raions.map((r) => r.name)}
@@ -126,14 +125,13 @@ export default function CreateIbanForm({ onSuccess, initialData }: Props) {
           }}
         />
 
-        {/* Localitate dropdown */}
         <FilterCombobox
           label="Localitate"
           options={localitati.map((l) => l.name)}
           value={localitate}
           onChange={(name) => {
             setLocalitate(name)
-            // auto-select raion when a localitate is chosen
+            
             const found = localitati.find((l) => l.name === name)
             if (found) {
               setSelectedRaionId(found.raionId)

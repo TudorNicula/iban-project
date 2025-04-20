@@ -24,7 +24,6 @@ export default function NavBar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
-          {/* Logo + desktop links */}
           <div className="flex items-center">
             <Link to="/" className="text-2xl font-extrabold text-blue-600 dark:text-blue-400">
               IBAN<span className="text-gray-500 dark:text-gray-300">Portal</span>
@@ -45,7 +44,6 @@ export default function NavBar() {
             </nav>
           </div>
 
-          {/* right side: role info, theme, logout */}
           <div className="hidden md:flex md:items-center md:space-x-4">
             {role && (
               <p className="text-sm text-gray-600 dark:text-gray-400">
@@ -63,7 +61,6 @@ export default function NavBar() {
             </button>
           </div>
 
-          {/* mobile menu button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileOpen((o) => !o)}
@@ -79,7 +76,6 @@ export default function NavBar() {
         </div>
       </div>
 
-      {/* mobile panel */}
       <Transition
         as={Fragment}
         show={mobileOpen}

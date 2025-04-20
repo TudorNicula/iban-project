@@ -4,7 +4,7 @@ export const exportToCsv = (filename: string, rows: Record<string, string | numb
     const csvContent =
       Object.keys(rows[0]).join(',') + '\n' + rows.map(row =>
         Object.values(row).map(value =>
-          `"${String(value).replace(/"/g, '""')}"` // handle commas & quotes safely
+          `"${String(value).replace(/"/g, '""')}"` 
         ).join(',')
       ).join('\n');
   

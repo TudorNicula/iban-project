@@ -12,7 +12,7 @@ namespace IbanApi.Features.Users
 
         public async Task<int> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            // Check unique email
+            
             if (await _context.Users.AnyAsync(u => u.Email == request.Email, cancellationToken))
                 throw new System.Exception("Email deja existent.");
 

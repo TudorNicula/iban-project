@@ -3,6 +3,8 @@ import axios from 'axios'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useAuth } from '../hooks/useAuth'
+import FilterCombobox from '../components/FilterCombobox'
+import { useRaioane } from '../hooks/useLocations'
 
 type User = {
   id: number
@@ -16,6 +18,7 @@ const roles = ['Admin', 'Operator', 'OperatorRaion']
 
 const AdminPage = () => {
   const { token } = useAuth()
+  const raioane = useRaioane()
   const [users, setUsers] = useState<User[]>([])
   const [form, setForm] = useState({
     fullName: '',
@@ -26,7 +29,7 @@ const AdminPage = () => {
   })
   const [error, setError] = useState('')
 
-  // Fetch users with error toast
+  
   const fetchUsers = useCallback(async () => {
     try {
       const res = await axios.get<User[]>('http://localhost:5141/users', {
@@ -71,10 +74,10 @@ const AdminPage = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       )
 
-      // success toast
+      
       toast.success('Utilizator creat cu succes!')
 
-      // reset form & refresh list
+      
       setForm({
         fullName: '',
         email: '',
@@ -95,14 +98,12 @@ const AdminPage = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-4 space-y-8">
-      {/* Toast container */}
       <ToastContainer position="top-right" />
 
       <h2 className="text-2xl font-semibold text-gray-800">
         Admin Panel – Gestionare Utilizatori
       </h2>
 
-      {/* Create User Form */}
       <div className="bg-white p-6 rounded-lg shadow-md space-y-4">
         <h3 className="text-lg font-medium text-gray-700">
           Adaugă Utilizator Nou
@@ -146,12 +147,13 @@ const AdminPage = () => {
             ))}
           </select>
           {form.role === 'OperatorRaion' && (
-            <input
-              name="assignedRaion"
-              placeholder="Raion Atribuit"
+            <FilterCombobox
+              label="Raion Atribuit"
+              options={raioane.map((r) => r.name)}
               value={form.assignedRaion}
-              onChange={handleChange}
-              className="border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              onChange={(value) =>
+                setForm((f) => ({ ...f, assignedRaion: value }))
+              }
             />
           )}
         </div>
@@ -164,7 +166,6 @@ const AdminPage = () => {
         </button>
       </div>
 
-      {/* Users Table */}
       <div className="bg-white p-6 rounded-lg shadow-md overflow-x-auto">
         <h3 className="text-lg font-medium text-gray-700 mb-4">
           Lista Utilizatori

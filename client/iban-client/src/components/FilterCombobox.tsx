@@ -40,7 +40,7 @@ export default function FilterCombobox({
   const filteredOptions = query === ''
     ? options
     : options.filter((opt) => opt.toLowerCase().includes(query.toLowerCase()))
-  // reset visibleCount when query or options change
+  
   useEffect(() => {
     if (infinite) setVisibleCount(pageSize)
   }, [filteredOptions, pageSize, infinite])
@@ -52,7 +52,7 @@ export default function FilterCombobox({
     if (!infinite) return
     const target = e.currentTarget
     const { scrollTop, scrollHeight, clientHeight } = target
-    // when scrolled near bottom, increase visibleCount
+    
     if (scrollTop + clientHeight >= scrollHeight - 10) {
       setVisibleCount((prev) => Math.min(filteredOptions.length, prev + pageSize))
     }
@@ -105,7 +105,6 @@ export default function FilterCombobox({
                 </ComboboxOption>
               ))
             )}
-            {/* loading indicator for infinite scroll */}
             {infinite && displayOptions.length < filteredOptions.length && (
               <div className="cursor-default select-none px-4 py-2 text-center text-gray-500">
                 Loading more...

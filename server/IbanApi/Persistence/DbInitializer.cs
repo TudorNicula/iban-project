@@ -6,7 +6,7 @@ namespace IbanApi.Persistence
     {
         public static void SeedAdmin(AppDbContext context)
         {
-            // Ensure roles exist
+            
             if (!context.Roles.Any())
             {
                 context.Roles.AddRange(
@@ -19,7 +19,7 @@ namespace IbanApi.Persistence
                 Console.WriteLine("[SEED] Roles created ✅");
             }
 
-            // Seed the admin user
+            
             if (!context.Users.Any(u => u.Email == "admin@example.com"))
             {
                 var adminRoleId = context.Roles.First(r => r.Name == "Admin").Id;
