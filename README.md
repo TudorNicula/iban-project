@@ -22,8 +22,11 @@ This application provides a web interface and an API to manage IBAN codes. It su
 - SQL Server (or LocalDB)
 
 ### Setup and Run
+1. **Database**
+   ```bash
+   From project directory, start up database by running docker compose up
 
-1. **Server**
+2. **Server**
    ```bash
    cd server/IbanApi
    # Configure connection string in appsettings.json
@@ -31,7 +34,7 @@ This application provides a web interface and an API to manage IBAN codes. It su
    dotnet run                  # starts API on http://localhost:5141
    ```
 
-2. **Client**
+3. **Client**
    ```bash
    cd client/iban-client
    npm install
