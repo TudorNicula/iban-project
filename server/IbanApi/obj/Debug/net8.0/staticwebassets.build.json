@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "b8n5WYUZcOllcWNo1gv7ptm+mh3wDcbG5rsO9teVdwk=",
+  "Source": "IbanApi",
+  "BasePath": "_content/IbanApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
